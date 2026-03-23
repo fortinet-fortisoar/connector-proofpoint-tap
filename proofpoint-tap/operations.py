@@ -57,6 +57,8 @@ def get_events(config, param, endpoint):
     interval = param.get('interval')
     if interval == 'Seconds':
         interval_type = 'sinceSeconds={since_seconds}'.format(since_seconds=param.get('sinceSeconds'))
+    elif interval == "Interval":
+        interval_type = 'interval=' + param.get('intervalTime')
     else:
         interval_type = 'sinceTime={since_time}'.format(since_time=param.get('sinceTime'))
     threat_status = proofpoint.threat_status_endpoint(param.get('threat_status'))
