@@ -1,0 +1,1009 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "@type": "WorkflowCollection",
+      "name": "Sample-Proofpoint-TAP-1.0.2",
+      "description": "Sample playbooks for Proofpoint TAP connector to get campaign details, get forensic details and get SIEM events.",
+      "visible": true,
+      "image": null,
+      "uuid": "fd93488f-152b-4987-ac6b-29fe20d64469",
+      "recordTags": [
+        "proofpoint-tap",
+        "Proofpoint"
+      ],
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Forensic Details",
+          "aliasName": null,
+          "description": "Get forensic details for provided threat or campaign.",
+          "collection": "/api/3/workflow_collections/fd93488f-152b-4987-ac6b-29fe20d64469",
+          "tag": "#Proofpoint TAP",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/dada9bb7-589c-4557-9587-830af97511a0",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Forensic Details",
+              "description": null,
+              "arguments": {
+                "name": "Proofpoint TAP",
+                "config": "",
+                "params": {
+                  "id": "Threat ID",
+                  "value": "61f7622167144dba5e3ae4480eeee78b23d66f7dfed970cfc3d086cc0dabdf50",
+                  "include_campaign_forensics": true
+                },
+                "version": "1.0.2",
+                "connector": "proofpoint-tap",
+                "operation": "get_forensic",
+                "operationTitle": "Get Forensic Details",
+                "step_variables": [],
+                "operationOutput": {
+                  "reports": [
+                    {
+                      "id": "",
+                      "name": "",
+                      "type": "",
+                      "scope": "",
+                      "forensics": [
+                        {
+                          "time": "",
+                          "type": "",
+                          "what": [],
+                          "display": "",
+                          "malicious": "",
+                          "platforms": [
+                            {
+                              "os": "",
+                              "name": "",
+                              "version": ""
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "generated": ""
+                }
+              },
+              "status": null,
+              "left": "213",
+              "top": "140",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "06cd4e5a-e859-4762-bb4d-078640a50244"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "c7384b59-6a8e-407b-aeae-84154497a9cc",
+                "title": "Proofpoint-TAP: Get Forensic Details",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "212",
+              "top": "11",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "dada9bb7-589c-4557-9587-830af97511a0"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Save response",
+              "description": null,
+              "arguments": {
+                "forensic_details": "{{vars.steps.Get_Forensic_Details.data}}"
+              },
+              "status": null,
+              "left": "212",
+              "top": "260",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "ed328953-5eb4-455c-b36e-8a160d7fa2cc"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "023e09cb-9cae-485b-8e0a-b4d7c77bd668",
+              "name": "Get Forensic Details -> Save response",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/ed328953-5eb4-455c-b36e-8a160d7fa2cc",
+              "sourceStep": "/api/3/workflow_steps/06cd4e5a-e859-4762-bb4d-078640a50244"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "0a50e7c7-6066-45b3-80ea-9b14f2c012de",
+              "name": "Alerts -> Get Forensic Details",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/06cd4e5a-e859-4762-bb4d-078640a50244",
+              "sourceStep": "/api/3/workflow_steps/dada9bb7-589c-4557-9587-830af97511a0"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": null,
+          "priority": null,
+          "uuid": "10356e80-fc02-4c48-aedb-5bc154aae2ce",
+          "recordTags": [
+            "proofpoint-tap",
+            "Proofpoint"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Blocked Threat Message Events",
+          "aliasName": null,
+          "description": "Fetch events for messages blocked in the specified time period which contained a known threat.",
+          "collection": "/api/3/workflow_collections/fd93488f-152b-4987-ac6b-29fe20d64469",
+          "tag": "#Proofpoint TAP",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/202a0531-e690-4631-9217-6c8950800d90",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Blocked Threat Message Events",
+              "description": null,
+              "arguments": {
+                "name": "Proofpoint TAP",
+                "config": "",
+                "params": {
+                  "format": "JSON",
+                  "interval": "Time",
+                  "sinceTime": "2017-10-01T18:30:00.000Z",
+                  "threat_type": [
+                    "URL"
+                  ],
+                  "threat_status": [
+                    "Active"
+                  ]
+                },
+                "version": "1.0.2",
+                "connector": "proofpoint-tap",
+                "operation": "get_messages_blocked_event",
+                "operationTitle": "Get Blocked Messages Events",
+                "step_variables": [],
+                "operationOutput": {
+                  "queryEndTime": "",
+                  "messagesBlocked": [
+                    {
+                      "sender": "",
+                      "subject": "",
+                      "headerCC": "",
+                      "headerTo": "",
+                      "senderIP": "",
+                      "messageID": "",
+                      "recipient": [],
+                      "spamScore": "",
+                      "headerFrom": "",
+                      "phishScore": "",
+                      "ccAddresses": [],
+                      "fromAddress": "",
+                      "messageTime": "",
+                      "malwareScore": "",
+                      "messageParts": [
+                        {
+                          "md5": "",
+                          "sha256": "",
+                          "filename": "",
+                          "contentType": "",
+                          "disposition": "",
+                          "oContentType": "",
+                          "sandboxStatus": ""
+                        }
+                      ],
+                      "headerReplyTo": "",
+                      "impostorScore": "",
+                      "replyToAddress": "",
+                      "threatsInfoMap": [
+                        {
+                          "threat": "",
+                          "threatId": "",
+                          "threatUrl": "",
+                          "campaignId": "",
+                          "threatTime": "",
+                          "threatType": "",
+                          "classification": ""
+                        }
+                      ]
+                    }
+                  ]
+                }
+              },
+              "status": null,
+              "left": "340",
+              "top": "150",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "069783fa-1a44-4e6d-8120-1ad68c453e7d"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "00e87919-a402-4ddb-bb80-defc4bfbda82",
+                "title": "Proofpoint-TAP: Get Blocked Messages Events",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "340",
+              "top": "34",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "202a0531-e690-4631-9217-6c8950800d90"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Save Response",
+              "description": null,
+              "arguments": {
+                "response": "{{vars.steps.Get_Blocked_Threat_Message_Events.data}}"
+              },
+              "status": null,
+              "left": "340",
+              "top": "280",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "501c7f83-0362-47fc-9bf2-bd52ba49ed73"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "81e36440-937b-4d85-8768-99c1d8120828",
+              "name": "Get Blocked Messages Events -> Save Response",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/501c7f83-0362-47fc-9bf2-bd52ba49ed73",
+              "sourceStep": "/api/3/workflow_steps/069783fa-1a44-4e6d-8120-1ad68c453e7d"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "987fcfb2-b05f-47e8-a959-f98ed342910f",
+              "name": "Alerts -> Get Blocked Messages Events",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/069783fa-1a44-4e6d-8120-1ad68c453e7d",
+              "sourceStep": "/api/3/workflow_steps/202a0531-e690-4631-9217-6c8950800d90"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": null,
+          "priority": null,
+          "uuid": "1622af61-74e7-4ad1-9929-a4bb47fb3447",
+          "recordTags": [
+            "proofpoint-tap",
+            "Proofpoint"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Delivered Threat Message Events",
+          "aliasName": null,
+          "description": "Fetch events for messages delivered in the specified time period which contained a known threat.",
+          "collection": "/api/3/workflow_collections/fd93488f-152b-4987-ac6b-29fe20d64469",
+          "tag": "#Proofpoint TAP",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/4a7686f2-9193-48a6-bd79-65eaf82dd0b0",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Delivered Threat Message Events",
+              "description": null,
+              "arguments": {
+                "name": "Proofpoint TAP",
+                "config": "",
+                "params": {
+                  "format": "JSON",
+                  "sinceTime": "2018-01-06T18:30:00.000Z",
+                  "interval": "Time",
+                  "threat_type": [
+                    "URL"
+                  ],
+                  "threat_status": [
+                    "Active"
+                  ]
+                },
+                "version": "1.0.2",
+                "connector": "proofpoint-tap",
+                "operation": "get_clicks_delivered_event",
+                "operationTitle": "Get Delivered Messages Events",
+                "step_variables": [],
+                "operationOutput": []
+              },
+              "status": null,
+              "left": "246",
+              "top": "134",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "3a8d9804-67c5-42fd-a01d-5a0994e099be"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Save response",
+              "description": null,
+              "arguments": {
+                "response": "{{vars.steps.Get_Delivered_Threat_Message_Events.data}}"
+              },
+              "status": null,
+              "left": "240",
+              "top": "271",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "405387c0-4b64-4bed-8ec4-a44a7450b49d"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "1457cdd0-0eda-4167-86a0-ebd4fc39224d",
+                "title": "Proofpoint-TAP: Get Delivered Messages Events",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "240",
+              "top": "12",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "4a7686f2-9193-48a6-bd79-65eaf82dd0b0"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "469f4014-5d2c-4a84-b8c4-cb8cb866ee54",
+              "name": "Alerts -> Get Delivered Messages Events",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/3a8d9804-67c5-42fd-a01d-5a0994e099be",
+              "sourceStep": "/api/3/workflow_steps/4a7686f2-9193-48a6-bd79-65eaf82dd0b0"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "4896b7fc-d9bc-42c5-8237-81b85c4fb0d3",
+              "name": "Get Delivered Messages Events -> Save response",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/405387c0-4b64-4bed-8ec4-a44a7450b49d",
+              "sourceStep": "/api/3/workflow_steps/3a8d9804-67c5-42fd-a01d-5a0994e099be"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": null,
+          "priority": null,
+          "uuid": "306cba10-ade1-4447-baaf-451871c5980a",
+          "recordTags": [
+            "proofpoint-tap",
+            "Proofpoint"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Events for All Issues",
+          "aliasName": null,
+          "description": "Fetch events for clicks to malicious URLs permitted and messages delivered containing a known attachment threat within the specified time period.",
+          "collection": "/api/3/workflow_collections/fd93488f-152b-4987-ac6b-29fe20d64469",
+          "tag": "#Proofpoint TAP",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/c15dc731-f3b7-4cec-bdb2-5ac2e741d0da",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Events for All Issues",
+              "description": null,
+              "arguments": {
+                "name": "Proofpoint TAP",
+                "config": "",
+                "params": {
+                  "format": "JSON",
+                  "interval": "Time",
+                  "sinceTime": "2017-12-31T18:30:00.000Z",
+                  "threat_type": [
+                    "URL"
+                  ],
+                  "threat_status": [
+                    "Active"
+                  ]
+                },
+                "version": "1.0.2",
+                "connector": "proofpoint-tap",
+                "operation": "get_issues_event",
+                "operationTitle": "Get Issues Events",
+                "step_variables": [],
+                "operationOutput": []
+              },
+              "status": null,
+              "left": "240",
+              "top": "140",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "1ba43cc8-f8e7-409e-891c-fe52bab7ab11"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Save response",
+              "description": null,
+              "arguments": {
+                "response": "{{vars.steps.Get_Events_for_All_Issues.data}}"
+              },
+              "status": null,
+              "left": "240",
+              "top": "271",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "4e642d69-b6e5-4459-b86a-ad6c3f09a7aa"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "0cbb349e-23f4-4456-998c-d5a530ac90eb",
+                "title": "Proofpoint-TAP: Get Issues Events",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "240",
+              "top": "12",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "c15dc731-f3b7-4cec-bdb2-5ac2e741d0da"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "23897649-4b24-47a4-8ea9-c46a2115d95f",
+              "name": "Get Issues Events -> Save response",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/4e642d69-b6e5-4459-b86a-ad6c3f09a7aa",
+              "sourceStep": "/api/3/workflow_steps/1ba43cc8-f8e7-409e-891c-fe52bab7ab11"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "7d6555fc-d10c-4684-91e2-3210be785bcb",
+              "name": "Alerts -> Get Issues Events",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/1ba43cc8-f8e7-409e-891c-fe52bab7ab11",
+              "sourceStep": "/api/3/workflow_steps/c15dc731-f3b7-4cec-bdb2-5ac2e741d0da"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": null,
+          "priority": null,
+          "uuid": "40541dd9-c984-4fc2-af4b-57e03d35d47e",
+          "recordTags": [
+            "proofpoint-tap",
+            "Proofpoint"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Blocked Malicious URL Events",
+          "aliasName": null,
+          "description": "Fetch events for clicks to malicious URLs blocked in the specified time period.",
+          "collection": "/api/3/workflow_collections/fd93488f-152b-4987-ac6b-29fe20d64469",
+          "tag": "#Proofpoint TAP",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/03516d3d-e10b-43a4-8349-6d386dc3792a",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "3020460a-d40b-41ca-b21e-0df968d72e87",
+                "title": "Proofpoint-TAP: Get Blocked Attempt URLs Events",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "240",
+              "top": "12",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "03516d3d-e10b-43a4-8349-6d386dc3792a"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Save response",
+              "description": null,
+              "arguments": {
+                "response": "{{vars.steps.Get_Blocked_Malicious_URL_Events.data}}"
+              },
+              "status": null,
+              "left": "240",
+              "top": "271",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "1f5b0e56-1a74-4c52-b333-eade51268ea4"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Blocked Malicious URL Events",
+              "description": null,
+              "arguments": {
+                "name": "Proofpoint TAP",
+                "config": "",
+                "params": {
+                  "format": "JSON",
+                  "interval": "Time",
+                  "sinceTime": "2017-10-28T18:30:00.000Z",
+                  "threat_type": [
+                    "URL"
+                  ],
+                  "threat_status": [
+                    "Active"
+                  ]
+                },
+                "version": "1.0.2",
+                "connector": "proofpoint-tap",
+                "operation": "get_clicks_blocked_event",
+                "operationTitle": "Get Blocked Attempt URLs Events",
+                "step_variables": [],
+                "operationOutput": []
+              },
+              "status": null,
+              "left": "240",
+              "top": "140",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "8ee8b039-ea91-484b-84f5-29d025d3c909"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "46052b94-101a-4d41-ac5e-6be3703c7b9a",
+              "name": "Get Blocked Attempt URLs Events -> Save response",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/1f5b0e56-1a74-4c52-b333-eade51268ea4",
+              "sourceStep": "/api/3/workflow_steps/8ee8b039-ea91-484b-84f5-29d025d3c909"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "a6aa2329-1f50-409d-bb0a-86ea551ddedd",
+              "name": "Alerts -> Get Blocked Attempt URLs Events",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/8ee8b039-ea91-484b-84f5-29d025d3c909",
+              "sourceStep": "/api/3/workflow_steps/03516d3d-e10b-43a4-8349-6d386dc3792a"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": null,
+          "priority": null,
+          "uuid": "5194704e-121b-4172-890f-5b30308a1b24",
+          "recordTags": [
+            "proofpoint-tap",
+            "Proofpoint"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Campaign Details",
+          "aliasName": null,
+          "description": "Get campaign details for provided campaign ID.",
+          "collection": "/api/3/workflow_collections/fd93488f-152b-4987-ac6b-29fe20d64469",
+          "tag": "#Proofpoint TAP",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/21b6a3b3-0e1d-4ad4-a491-b0d56232f930",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "316b827d-9a8a-4c00-8856-621974128623",
+                "title": "Proofpoint-TAP: Get Campaign Details",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "212",
+              "top": "11",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "21b6a3b3-0e1d-4ad4-a491-b0d56232f930"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Save response",
+              "description": null,
+              "arguments": {
+                "campaign_details": "{{vars.steps.Get_Campaign_Details.data}}"
+              },
+              "status": null,
+              "left": "212",
+              "top": "260",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "8210720e-e308-4610-bb84-6643661f18e0"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Campaign Details",
+              "description": null,
+              "arguments": {
+                "name": "Proofpoint TAP",
+                "config": "",
+                "params": {
+                  "campaign_id": "46e01b8a-c899-404d-bcd9-189bb393d1a7"
+                },
+                "version": "1.0.2",
+                "connector": "proofpoint-tap",
+                "operation": "get_campaign_details",
+                "operationTitle": "Get Campaign Details",
+                "step_variables": [],
+                "operationOutput": {
+                  "name": "",
+                  "actors": [
+                    {
+                      "id": "",
+                      "name": ""
+                    }
+                  ],
+                  "malware": [
+                    {
+                      "id": "",
+                      "name": ""
+                    }
+                  ],
+                  "startDate": "",
+                  "techniques": [
+                    {
+                      "id": "",
+                      "name": ""
+                    }
+                  ],
+                  "description": "",
+                  "campaignMembers": [
+                    {
+                      "id": "",
+                      "type": "",
+                      "threat": "",
+                      "subType": "",
+                      "threatTime": ""
+                    }
+                  ]
+                }
+              },
+              "status": null,
+              "left": "212",
+              "top": "127",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "980387a7-4f5f-46dc-b742-6d2025b7616f"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "0be108bf-c75e-44f8-9780-954b34d85da9",
+              "name": "Alerts -> Get Campaign Details",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/980387a7-4f5f-46dc-b742-6d2025b7616f",
+              "sourceStep": "/api/3/workflow_steps/21b6a3b3-0e1d-4ad4-a491-b0d56232f930"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "82094923-5a67-4027-8286-4f0504ce7a20",
+              "name": "Get Campaign Details -> Save response",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/8210720e-e308-4610-bb84-6643661f18e0",
+              "sourceStep": "/api/3/workflow_steps/980387a7-4f5f-46dc-b742-6d2025b7616f"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": null,
+          "priority": null,
+          "uuid": "708414be-d596-4e73-b23b-a844e69dda27",
+          "recordTags": [
+            "proofpoint-tap",
+            "Proofpoint"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get All Events",
+          "aliasName": null,
+          "description": "Fetch events for all clicks and messages relating to known threats within the specified time period.",
+          "collection": "/api/3/workflow_collections/fd93488f-152b-4987-ac6b-29fe20d64469",
+          "tag": "#Proofpoint TAP",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/f9495c6a-8051-4fc3-8438-5e8b3b94c356",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Save response",
+              "description": null,
+              "arguments": {
+                "response": "{{vars.steps.Get_All_Events.data}}"
+              },
+              "status": null,
+              "left": "240",
+              "top": "271",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "4491ae3d-8abb-49ce-bd05-582d67dc32d7"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get All Events",
+              "description": null,
+              "arguments": {
+                "name": "Proofpoint TAP",
+                "config": "",
+                "params": {
+                  "format": "JSON",
+                  "sinceTime": "2018-01-06T18:30:00.000Z",
+                  "interval": "Time",
+                  "threat_type": [
+                    "Attachments"
+                  ],
+                  "threat_status": [
+                    "Active"
+                  ]
+                },
+                "version": "1.0.2",
+                "connector": "proofpoint-tap",
+                "operation": "get_all_events",
+                "operationTitle": "Get All Events",
+                "step_variables": [],
+                "operationOutput": []
+              },
+              "status": null,
+              "left": "240",
+              "top": "147",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "5e4f1255-67ef-4736-b290-0b1a2c4789ba"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "eb353c28-4cde-4e58-b39b-9fa98e0f7236",
+                "title": "Proofpoint-TAP: Get All Events",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "240",
+              "top": "12",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "f9495c6a-8051-4fc3-8438-5e8b3b94c356"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "6ab9115c-bf98-442b-be7e-cd4810049b6b",
+              "name": "Alerts -> Get All Events",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/5e4f1255-67ef-4736-b290-0b1a2c4789ba",
+              "sourceStep": "/api/3/workflow_steps/f9495c6a-8051-4fc3-8438-5e8b3b94c356"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "e00b8fd3-5b32-4896-9b8a-9a6bec939a0b",
+              "name": "Get All Events -> Save response",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/4491ae3d-8abb-49ce-bd05-582d67dc32d7",
+              "sourceStep": "/api/3/workflow_steps/5e4f1255-67ef-4736-b290-0b1a2c4789ba"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": null,
+          "priority": null,
+          "uuid": "81e30a78-df1c-45aa-a07d-c366ddc1607e",
+          "recordTags": [
+            "proofpoint-tap",
+            "Proofpoint"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get Permitted Malicious URL Events",
+          "aliasName": null,
+          "description": "Fetch events for clicks to malicious URLs permitted in the specified time period.",
+          "collection": "/api/3/workflow_collections/fd93488f-152b-4987-ac6b-29fe20d64469",
+          "tag": "#Proofpoint TAP",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/e1e40244-d112-4c73-82af-b996e14b4e15",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Permitted Malicious URL Events",
+              "description": null,
+              "arguments": {
+                "name": "Proofpoint TAP",
+                "config": "",
+                "params": {
+                  "format": "JSON",
+                  "interval": "Time",
+                  "sinceTime": "2017-12-31T18:30:00.000Z",
+                  "threat_type": [
+                    "URL"
+                  ],
+                  "threat_status": [
+                    "Active"
+                  ]
+                },
+                "version": "1.0.2",
+                "connector": "proofpoint-tap",
+                "operation": "get_clicks_permitted_event",
+                "operationTitle": "Get Permitted Attempt URLs Events",
+                "step_variables": [],
+                "operationOutput": {
+                  "clicksPermitted": [
+                    {
+                      "url": "",
+                      "sender": "",
+                      "clickIP": "",
+                      "senderIP": "",
+                      "threatID": "",
+                      "clickTime": "",
+                      "messageID": "",
+                      "recipient": "",
+                      "threatURL": "",
+                      "userAgent": "",
+                      "campaignId": "",
+                      "threatTime": "",
+                      "classification": ""
+                    }
+                  ]
+                }
+              },
+              "status": null,
+              "left": "340",
+              "top": "160",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "5b4536cd-8df5-475d-b02a-56889282de9c"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "417d5823-4056-4516-8616-6236ed94ad56",
+                "title": "Proofpoint-TAP: Get Permitted Attempt URLs Events",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": []
+              },
+              "status": null,
+              "left": "340",
+              "top": "34",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "e1e40244-d112-4c73-82af-b996e14b4e15"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Save Response",
+              "description": null,
+              "arguments": {
+                "response": "{{vars.steps.Get_Permitted_Malicious_URL_Events.data}}"
+              },
+              "status": null,
+              "left": "340",
+              "top": "280",
+              "stepType": "/api/3/workflow_step_types/04d0cf46-b6a8-42c4-8683-60a7eaa69e8f",
+              "uuid": "f127eced-52db-42d8-9774-af5e1735910d"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "b1528d0b-2f07-409e-a598-bae6187eeb74",
+              "name": "Alerts -> Get Permitted Attempt URLs Events",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/5b4536cd-8df5-475d-b02a-56889282de9c",
+              "sourceStep": "/api/3/workflow_steps/e1e40244-d112-4c73-82af-b996e14b4e15"
+            },
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "eb2850e4-0ee5-4c17-a356-e3c13270bfcf",
+              "name": "Get Permitted Attempt URLs Events -> Save Response",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/f127eced-52db-42d8-9774-af5e1735910d",
+              "sourceStep": "/api/3/workflow_steps/5b4536cd-8df5-475d-b02a-56889282de9c"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": null,
+          "priority": null,
+          "uuid": "999951c1-dec7-4981-a8db-fa5373ba85d6",
+          "recordTags": [
+            "proofpoint-tap",
+            "Proofpoint"
+          ],
+          "isPrivate": false,
+          "owners": []
+        }
+      ]
+    }
+  ],
+  "exported_tags": [
+    "proofpoint-tap",
+    "Proofpoint"
+  ]
+}
