@@ -1,0 +1,842 @@
+{
+  "name": "proofpoint-tap",
+  "label": "Proofpoint TAP",
+  "version": "1.0.2",
+  "description": "Perform actions like get events, get campaign details and get forensic information using Proofpoint TAP",
+  "publisher": "Community",
+  "cs_approved": false,
+  "cs_compatible": true,
+  "category": "Information",
+  "icon_small_name": "proofpoint_small.png",
+  "icon_large_name": "proofpoint_large.png",
+  "help_online": "https://docs.fortinet.com/document/fortisoar/1.0.2/proofpoint-tap/77/proofpoint-tap-v1-0-2",
+  "configuration": {
+    "fields": [
+      {
+        "title": "Server URL",
+        "type": "text",
+        "name": "server",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "value": "tap-api-v2.proofpoint.com",
+        "description": "URL of the Proofpoint TAP server to which you will connect and perform automated operations."
+      },
+      {
+        "title": "Username",
+        "type": "text",
+        "name": "username",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "description": "Username to access the Proofpoint TAP server to which you will connect and perform automated operations."
+      },
+      {
+        "title": "Password",
+        "type": "password",
+        "name": "password",
+        "required": true,
+        "editable": true,
+        "visible": true,
+        "description": "Password to access the Proofpoint TAP server to which you will connect and perform automated operations."
+      },
+      {
+        "title": "Verify SSL",
+        "name": "verify_ssl",
+        "type": "checkbox",
+        "required": false,
+        "editable": true,
+        "visible": true,
+        "value": true,
+        "description": "Specifies whether the SSL certificate for the server is to be verified or not."
+      }
+    ]
+  },
+  "operations": [
+    {
+      "operation": "get_clicks_blocked_event",
+      "title": "Get Blocked Malicious URL Events",
+      "description": "Retrieves events associated with clicks to malicious URLs that were blocked on Proofpoint TAP within the specified time period and other input parameters such as threat status, threat type, etc.",
+      "enabled": true,
+      "category": "investigation",
+      "annotation": "get_events",
+      "output_schema": {},
+      "parameters": [
+        {
+          "title": "Time Interval",
+          "type": "select",
+          "name": "interval",
+          "value": "GET",
+          "options": [
+            "Seconds",
+            "Time"
+          ],
+          "onchange": {
+            "Seconds": [
+              {
+                "title": "Since Seconds",
+                "type": "integer",
+                "name": "sinceSeconds",
+                "tooltip": "The maximum seconds is 3600.",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "value": 3600,
+                "description": "Since Seconds representing a time window in seconds from the current Proofpoint TAP server time."
+              }
+            ],
+            "Time": [
+              {
+                "title": "Since Time",
+                "type": "datetime",
+                "name": "sinceTime",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "value": "",
+                "description": "Since Time represents the start of the data retrieval period from Proofpoint TAP server."
+              }
+            ]
+          },
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "description": "Time period for which you want to fetch events associated with clicks to malicious URLs that were blocked on Proofpoint TAP. You can choose between Seconds or Time.\n\nIf you choose Seconds, then in the Since Seconds field, specify the time window in seconds from when you want to fetch events associated with clicks to malicious URLs that were blocked on Proofpoint TAP.\nIf you choose Time, then in the Since TIme field, specify the time window from when you want to fetch events associated with clicks to malicious URLs that were blocked on Proofpoint TAP."
+        },
+        {
+          "title": "Format",
+          "type": "select",
+          "name": "format",
+          "options": [
+            "JSON",
+            "Syslog"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": "JSON",
+          "description": "(Optional) Format in whichyou want to fetch events associated with clicks to malicious URLs that were blocked on Proofpoint TAP. You can choose between JSON or Syslog."
+        },
+        {
+          "title": "Threat Type",
+          "type": "multiselect",
+          "name": "threat_type",
+          "options": [
+            "URL",
+            "Attachments",
+            "Message Text"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": [
+            "URL"
+          ],
+          "description": "(Optional) Type of threats based on which you want to fetch events associated with clicks to malicious URLs that were blocked on Proofpoint TAP. You can choose URL, Attachments, Message Text, or a combination of these threat types."
+        },
+        {
+          "title": "Threat Status",
+          "type": "multiselect",
+          "name": "threat_status",
+          "options": [
+            "Active",
+            "Cleared",
+            "False Positive"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": [
+            "Active"
+          ],
+          "description": "(Optional) Status of threats based on which you want to fetch events associated with clicks to malicious URLs that were blocked on Proofpoint TAP. You can choose Active, Cleared, False Positive, or a combination of these threat types."
+        }
+      ]
+    },
+    {
+      "operation": "get_clicks_permitted_event",
+      "title": "Get Permitted Malicious URL Events",
+      "description": "Retrieves events associated with clicks to malicious URLs that were permitted on Proofpoint TAP within the specified time period and other input parameters such as threat status, threat type etc.",
+      "enabled": true,
+      "category": "investigation",
+      "annotation": "get_events",
+      "output_schema": {
+        "clicksPermitted": [
+          {
+            "campaignId": "",
+            "classification": "",
+            "clickIP": "",
+            "clickTime": "",
+            "messageID": "",
+            "recipient": "",
+            "sender": "",
+            "senderIP": "",
+            "threatID": "",
+            "threatTime": "",
+            "threatURL": "",
+            "url": "",
+            "userAgent": ""
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "title": "Time Interval",
+          "type": "select",
+          "name": "interval",
+          "value": "GET",
+          "options": [
+            "Seconds",
+            "Time"
+          ],
+          "onchange": {
+            "Seconds": [
+              {
+                "title": "Since Seconds",
+                "type": "integer",
+                "name": "sinceSeconds",
+                "tooltip": "Min Seconds:30 Maximum Seconds:3600",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "value": 3600,
+                "description": "Since Seconds representing a time window in seconds from the current Proofpoint TAP server time. Since seconds values, minimum is thirty and maximum is 3600(one hour)."
+              }
+            ],
+            "Time": [
+              {
+                "title": "Since Time",
+                "type": "datetime",
+                "name": "sinceTime",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "value": "",
+                "tooltip": "Since time should not be more than 1 hour of Proofpoint TAP server time",
+                "description": "Since Time represents the start of the data retrieval period from Proofpoint TAP server. Note: Since time should not be more than 1 hour of Proofpoint TAP server time."
+              }
+            ]
+          },
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "description": "Time period for which you want to fetch events associated with clicks to malicious URLs that were permittedon Proofpoint TAP. You can choose between Seconds or Time.\n\nIf you choose Seconds, then in the Since Seconds field, specify the time window in seconds from when you want to fetch events associated with clicks to malicious URLs that were permitted on Proofpoint TAP.\nIf you choose Time, then in the Since TIme field, specify the time window from when you want to fetch events associated with clicks to malicious URLs that were permitted on Proofpoint TAP."
+        },
+        {
+          "title": "Format",
+          "type": "select",
+          "name": "format",
+          "options": [
+            "JSON",
+            "Syslog"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": "JSON",
+          "description": "(Optional) Format in whichyou want to fetch events associated with clicks to malicious URLs that were permitted on Proofpoint TAP. You can choose between JSON or Syslog."
+        },
+        {
+          "title": "Threat Type",
+          "type": "multiselect",
+          "name": "threat_type",
+          "options": [
+            "URL",
+            "Attachments",
+            "Message Text"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": [
+            "URL"
+          ],
+          "description": "(Optional) Type of threats based on which you want to fetch events associated with clicks to malicious URLs that were permitted on Proofpoint TAP. You can choose URL, Attachments, Message Text, or a combination of these threat types."
+        },
+        {
+          "title": "Threat Status",
+          "type": "multiselect",
+          "name": "threat_status",
+          "options": [
+            "Active",
+            "Cleared",
+            "False Positive"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": [
+            "Active"
+          ],
+          "description": "(Optional) Status of threats based on which you want to fetch events associated with clicks to malicious URLs that were permitted on Proofpoint TAP. You can choose Active, Cleared, False Positive, or a combination of these threat types."
+        }
+      ]
+    },
+    {
+      "operation": "get_messages_blocked_event",
+      "title": "Get Blocked Threat Message Events",
+      "description": "Retrieves events associated with messages that contained a known threat, and were blocked on Proofpoint TAP within the specified time period and other input parameters such as threat status, threat type, etc.",
+      "enabled": true,
+      "category": "investigation",
+      "annotation": "get_events",
+      "output_schema": {
+        "messagesBlocked": [
+          {
+            "ccAddresses": [],
+            "fromAddress": "",
+            "headerCC": "",
+            "headerFrom": "",
+            "headerReplyTo": "",
+            "headerTo": "",
+            "impostorScore": "",
+            "malwareScore": "",
+            "messageID": "",
+            "messageParts": [
+              {
+                "contentType": "",
+                "disposition": "",
+                "filename": "",
+                "md5": "",
+                "oContentType": "",
+                "sandboxStatus": "",
+                "sha256": ""
+              }
+            ],
+            "threatsInfoMap": [
+              {
+                "campaignId": "",
+                "classification": "",
+                "threat": "",
+                "threatId": "",
+                "threatTime": "",
+                "threatType": "",
+                "threatUrl": ""
+              }
+            ],
+            "messageTime": "",
+            "phishScore": "",
+            "recipient": [],
+            "replyToAddress": "",
+            "sender": "",
+            "senderIP": "",
+            "spamScore": "",
+            "subject": ""
+          }
+        ],
+        "queryEndTime": ""
+      },
+      "parameters": [
+        {
+          "title": "Time Interval",
+          "type": "select",
+          "name": "interval",
+          "value": "GET",
+          "options": [
+            "Seconds",
+            "Time"
+          ],
+          "onchange": {
+            "Seconds": [
+              {
+                "title": "Since Seconds",
+                "type": "integer",
+                "name": "sinceSeconds",
+                "tooltip": "The maximum seconds is 3600.",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "value": 3600,
+                "description": "Since Seconds representing a time window in seconds from the current Proofpoint TAP server time."
+              }
+            ],
+            "Time": [
+              {
+                "title": "Since Time",
+                "type": "datetime",
+                "name": "sinceTime",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "value": "",
+                "description": "Since Time represents the start of the data retrieval period from Proofpoint TAP server."
+              }
+            ]
+          },
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "description": "Time period for which you want to fetch events associated with messages that contain known threats and which were blocked on Proofpoint TAP. You can choose between Seconds or Time.\n\nIf you choose Seconds, then in the Since Seconds field, specify the time window in seconds from when you want to fetch events associated with messages that contain known threats and which were blocked on Proofpoint TAP.\nIf you choose Time, then in the Since TIme field, specify the time window from when you want to fetch events associated with messages that contain known threats and which were blocked on Proofpoint TAP."
+        },
+        {
+          "title": "Format",
+          "type": "select",
+          "name": "format",
+          "options": [
+            "JSON",
+            "Syslog"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": "JSON",
+          "description": "(Optional) Format in whichyou want to fetch events associated with messages that contain known threats and which were blocked on Proofpoint TAP. You can choose between JSON or Syslog."
+        },
+        {
+          "title": "Threat Type",
+          "type": "multiselect",
+          "name": "threat_type",
+          "options": [
+            "URL",
+            "Attachments",
+            "Message Text"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": [
+            "URL"
+          ],
+          "description": "(Optional) Type of threats based on which you want to fetch events associated with messages that contain known threats and which were blocked on Proofpoint TAP. You can choose URL, Attachments, Message Text, or a combination of these threat types."
+        },
+        {
+          "title": "Threat Status",
+          "type": "multiselect",
+          "name": "threat_status",
+          "options": [
+            "Active",
+            "Cleared",
+            "False Positive"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": [
+            "Active"
+          ],
+          "description": "(Optional) Status of threats based on which you want to fetch events associated with messages that contain known threats and which were blocked on Proofpoint TAP. You can choose Active, Cleared, False Positive, or a combination of these threat types."
+        }
+      ]
+    },
+    {
+      "operation": "get_clicks_delivered_event",
+      "title": "Get Delivered Threat Message Events",
+      "description": "Retrieves events associated with messages that contained a known threat, and which were delivered within the specified time period and other input parameters such as threat status, threat type, etc.",
+      "enabled": true,
+      "category": "investigation",
+      "annotation": "get_events",
+      "output_schema": {},
+      "parameters": [
+        {
+          "title": "Time Interval",
+          "type": "select",
+          "name": "interval",
+          "value": "GET",
+          "options": [
+            "Seconds",
+            "Time"
+          ],
+          "onchange": {
+            "Seconds": [
+              {
+                "title": "Since Seconds",
+                "type": "integer",
+                "name": "sinceSeconds",
+                "tooltip": "The maximum seconds is 3600.",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "value": 3600,
+                "description": "Since Seconds representing a time window in seconds from the current Proofpoint TAP server time."
+              }
+            ],
+            "Time": [
+              {
+                "title": "Since Time",
+                "type": "datetime",
+                "name": "sinceTime",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "value": "",
+                "description": "Since Time represents the start of the data retrieval period from Proofpoint TAP server."
+              }
+            ]
+          },
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "description": "Time period for which you want to fetch events associated with delivered messages that contained known threats. You can choose between Seconds or Time.\n\nIf you choose Seconds, then in the Since Seconds field, specifythe time window in seconds from when you want to fetch events associated with delivered messages that contained known threats.\nIf you choose Time, then in the Since TIme field, specify the time window from when you want to fetch events associated with delivered messages that contained known threats."
+        },
+        {
+          "title": "Format",
+          "type": "select",
+          "name": "format",
+          "options": [
+            "JSON",
+            "Syslog"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": "JSON",
+          "description": "(Optional) Format in whichyou want to fetch events associated with delivered messages that contained known threats. You can choose between JSON or Syslog."
+        },
+        {
+          "title": "Threat Type",
+          "type": "multiselect",
+          "name": "threat_type",
+          "options": [
+            "URL",
+            "Attachments",
+            "Message Text"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": [
+            "URL"
+          ],
+          "description": "(Optional) Type of threats based on which you want to fetch events associated with delivered messages that contained known threats. You can choose URL, Attachments, Message Text, or a combination of these threat types."
+        },
+        {
+          "title": "Threat Status",
+          "type": "multiselect",
+          "name": "threat_status",
+          "options": [
+            "Active",
+            "Cleared",
+            "False Positive"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": [
+            "Active"
+          ],
+          "description": "(Optional) Status of threats based on which you want to fetch events associated with delivered messages that contained known threats. You can choose Active, Cleared, False Positive, or a combination of these threat types."
+        }
+      ]
+    },
+    {
+      "operation": "get_all_events",
+      "title": "Get All Events",
+      "description": "Retrieves events associated with all clicks and all messages related to known threats within the specified time period and other input parameters such as threat status, threat type, etc.",
+      "enabled": true,
+      "category": "investigation",
+      "annotation": "get_events",
+      "output_schema": {},
+      "parameters": [
+        {
+          "title": "Time Interval",
+          "type": "select",
+          "name": "interval",
+          "value": "GET",
+          "options": [
+            "Seconds",
+            "Time"
+          ],
+          "onchange": {
+            "Seconds": [
+              {
+                "title": "Since Seconds",
+                "type": "integer",
+                "name": "sinceSeconds",
+                "tooltip": "The maximum seconds is 3600.",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "value": 3600,
+                "description": "Since Seconds representing a time window in seconds from the current Proofpoint TAP server time."
+              }
+            ],
+            "Time": [
+              {
+                "title": "Since Time",
+                "type": "datetime",
+                "name": "sinceTime",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "value": "",
+                "description": "Since Time represents the start of the data retrieval period from Proofpoint TAP server."
+              }
+            ]
+          },
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "description": "Time period for which you want to fetch events associated with all clicks and all messages related to known threats on Proofpoint TAP. You can choose between Seconds or Time.\n\nIf you choose Seconds, then in the Since Seconds field, specify the time window in seconds from when you want to fetch events associated with all clicks and all messages related to known threats on Proofpoint TAP.\nIf you choose Time, then in the Since TIme field, specify the time window from when you want to fetch events associated with all clicks and all messages related to known threats on Proofpoint TAP."
+        },
+        {
+          "title": "Format",
+          "type": "select",
+          "name": "format",
+          "options": [
+            "JSON",
+            "Syslog"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": "JSON",
+          "description": "(Optional) Format in whichyou want to fetch events associated with all clicks and all messages related to known threats on Proofpoint TAP. You can choose between JSON or Syslog."
+        },
+        {
+          "title": "Threat Type",
+          "type": "multiselect",
+          "name": "threat_type",
+          "options": [
+            "URL",
+            "Attachments",
+            "Message Text"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": [
+            "URL"
+          ],
+          "description": "(Optional) Type of threats based on which you want to fetch events associated with all clicks and all messages related to known threats on Proofpoint TAP. You can choose URL, Attachments, Message Text, or a combination of these threat types."
+        },
+        {
+          "title": "Threat Status",
+          "type": "multiselect",
+          "name": "threat_status",
+          "options": [
+            "Active",
+            "Cleared",
+            "False Positive"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": [
+            "Active"
+          ],
+          "description": "(Optional) Status of threats based on which you want to fetch events associated with all clicks and all messages related to known threats on Proofpoint TAP. You can choose Active, Cleared, False Positive, or a combination of these threat types."
+        }
+      ]
+    },
+    {
+      "operation": "get_issues_event",
+      "title": "Get Events for All Issues",
+      "description": "Retrieves events associated with all clicks to malicious URLs and all messages delivered that contained a known threat within the specified time period and other input parameters such as threat status, threat type, etc.",
+      "enabled": true,
+      "category": "investigation",
+      "annotation": "get_events",
+      "output_schema": {},
+      "parameters": [
+        {
+          "title": "Time Interval",
+          "type": "select",
+          "name": "interval",
+          "value": "GET",
+          "options": [
+            "Seconds",
+            "Time"
+          ],
+          "onchange": {
+            "Seconds": [
+              {
+                "title": "Since Seconds",
+                "type": "integer",
+                "name": "sinceSeconds",
+                "tooltip": "The maximum seconds is 3600.",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "value": 3600,
+                "description": "Since Seconds representing a time window in seconds from the current Proofpoint TAP server time."
+              }
+            ],
+            "Time": [
+              {
+                "title": "Since Time",
+                "type": "datetime",
+                "name": "sinceTime",
+                "required": true,
+                "editable": true,
+                "visible": true,
+                "value": "",
+                "description": "Since Time represents the start of the data retrieval period from Proofpoint TAP server."
+              }
+            ]
+          },
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "description": "Time period for which you want to fetch events associated with all clicks to malicious URLs and all messages delivered that contained a known threat. You can choose between Seconds or Time.\n\nIf you choose Seconds, then in the Since Seconds field, specify the time window in seconds from when you want to fetch events associated with all clicks to malicious URLs and all messages delivered that contained a known threat.\nIf you choose Time, then in the Since TIme field, specify the time window from when you want to fetch events associated with all clicks to malicious URLs and all messages delivered that contained a known threat."
+        },
+        {
+          "title": "Format",
+          "type": "select",
+          "name": "format",
+          "options": [
+            "JSON",
+            "Syslog"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": "JSON",
+          "description": "(Optional) Format in whichyou want to fetch events associated with all clicks to malicious URLs and all messages delivered that contained a known threat. You can choose between JSON or Syslog."
+        },
+        {
+          "title": "Threat Type",
+          "type": "multiselect",
+          "name": "threat_type",
+          "options": [
+            "URL",
+            "Attachments",
+            "Message Text"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": [
+            "URL"
+          ],
+          "description": "(Optional) Type of threats based on which you want to fetch events associated with all clicks to malicious URLs and all messages delivered that contained a known threat. You can choose URL, Attachments, Message Text, or a combination of these threat types."
+        },
+        {
+          "title": "Threat Status",
+          "type": "multiselect",
+          "name": "threat_status",
+          "options": [
+            "Active",
+            "Cleared",
+            "False Positive"
+          ],
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": [
+            "Active"
+          ],
+          "description": "(Optional) Status of threats based on which you want to fetch events associated with all clicks to malicious URLs and all messages delivered that contained a known threat. You can choose Active, Cleared, False Positive, or a combination of these threat types."
+        }
+      ]
+    },
+    {
+      "operation": "get_campaign_details",
+      "title": "Get Campaign Details",
+      "annotation": "get_campaign_details",
+      "description": "Retrieves details of a campaign from Proofpoint TAP based on the campaign ID specified.",
+      "enabled": true,
+      "output_schema": {
+        "name": "",
+        "description": "",
+        "startDate": "",
+        "campaignMembers": [
+          {
+            "subType": "",
+            "id": "",
+            "type": "",
+            "threat": "",
+            "threatTime": ""
+          }
+        ],
+        "actors": [
+          {
+            "id": "",
+            "name": ""
+          }
+        ],
+        "malware": [
+          {
+            "id": "",
+            "name": ""
+          }
+        ],
+        "techniques": [
+          {
+            "id": "",
+            "name": ""
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "title": "Campaign ID",
+          "type": "text",
+          "name": "campaign_id",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "value": "",
+          "description": "ID of the campaign whose details you want to retrieve from Proofpoint TAP."
+        }
+      ]
+    },
+    {
+      "operation": "get_forensic",
+      "title": "Get Forensic Details",
+      "annotation": "get_forensic",
+      "description": "Retrieves forensic details of a campaign from Proofpoint TAP based on the threat or campaign ID specified.",
+      "enabled": true,
+      "output_schema": {
+        "generated": "",
+        "reports": [
+          {
+            "name": "",
+            "scope": "",
+            "type": "",
+            "id": "",
+            "forensics": [
+              {
+                "type": "",
+                "display": "",
+                "malicious": "",
+                "time": "",
+                "what": {},
+                "platforms": [
+                  {
+                    "name": "",
+                    "os": "",
+                    "version": ""
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "parameters": [
+        {
+          "title": "ID Type",
+          "type": "select",
+          "name": "id",
+          "options": [
+            "Campaign ID",
+            "Threat ID"
+          ],
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "value": "",
+          "description": "Type of ID whose forensic detailsyou want to retrieve from Proofpoint TAP. You can choose between Campaign ID or Threat ID."
+        },
+        {
+          "title": "Value",
+          "type": "text",
+          "name": "value",
+          "required": true,
+          "editable": true,
+          "visible": true,
+          "value": "",
+          "description": "Value of the campaign ID or threat ID whose forensic detailsyou want to retrieve from Proofpoint TAP."
+        },
+        {
+          "title": "Include Campaign Forensics",
+          "type": "checkbox",
+          "name": "include_campaign_forensics",
+          "required": false,
+          "editable": true,
+          "visible": true,
+          "value": false,
+          "description": "Select this option to include campaign forensics in the details thatyou want to retrieve from Proofpoint TAP."
+        }
+      ]
+    }
+  ]
+}
